@@ -1,0 +1,51 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    padding: 15px;
+}
+
+.wrapper {
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 1024px;
+    padding-right: 10px;
+    padding-left: 10px;
+    margin-top: 32px;
+}
+
+.card {
+    margin-bottom: 24px;
+    box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.18);
+}
+
+.selector .Select-control {
+    width: 200px;
+    text-align: center;
+}
+
+.menu-title {
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #079A82;
+    text-align: center;
+}
+
+.multi-select {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+}
+
+#species {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.multi-select-dropdown {
+    width: 500px;
+    display: flex;
+    text-align: center;
+}

@@ -12,6 +12,7 @@ features = data.drop('species', axis=1).columns
 
 
 app = Dash(__name__)
+app.title = 'Iris Dataset'
 
 app.layout = html.Div(
     children=[
@@ -19,24 +20,38 @@ app.layout = html.Div(
             children= dcc.Graph(
                 id="iris-chart",
                 config={"displayModeBar": False}
-            )
+            ),
+            className='card'
         ),
         html.Div(  # dropdown for x and y
             children=[
-                dcc.Dropdown(
-                    options=features,
-                    value="sepal_length",
-                    clearable=False,
-                    id='x'
+                html.Div(
+                    children=[
+                        html.Div(children='x-axis', className='menu-title'),
+                        dcc.Dropdown(
+                            options=features,
+                            value="sepal_length",
+                            clearable=False,
+                            id='x'
+                        ),
+                    ],
+                    className='selector'
                 ),
-                dcc.Dropdown(
-                    options=features,
-                    value="petal_length",
-                    clearable=False,
-                    id='y'
+                html.Div(
+                    children=[
+                        html.Div(children='y-axis', className='menu-title'),
+                        dcc.Dropdown(
+                                options=features,
+                                value="petal_length",
+                                clearable=False,
+                                id='y'
+                        )
+                    ],
+                    className='selector'
                 )
+                
             ],
-            className="selector"
+            className="container"
         ),
         html.Div(  # multi select dropdown for species
             children=[
@@ -46,10 +61,13 @@ app.layout = html.Div(
                     value=species,
                     multi=True,
                     clearable=False,
+                    className="multi-select-dropdown"
                 )
-            ]
+            ],
+            className="multi-select"
         )
-    ]
+    ],
+    className='wrapper'
 )
 
 
