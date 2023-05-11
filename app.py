@@ -11,10 +11,6 @@ species = data['species'].unique()
 features = data.drop('species', axis=1).columns
 
 
-# df = data[data['species'].isin(['setosa', 'versicolor'])]
-# print(len(df))
-
-
 app = Dash(__name__)
 
 app.layout = html.Div(
@@ -56,6 +52,7 @@ app.layout = html.Div(
     ]
 )
 
+
 @app.callback(
     Output('iris-chart', 'figure'),
     Input('x', 'value'),  # take the x value from user
@@ -71,6 +68,7 @@ def update_graph(x_value, y_value, species):
         title='Comparision between sepal and petal',
     ),
     return figure[0]  # figure is of tuple type but graph needs figure type
+
 
 if __name__ == "__main__":
     app.run_server(host="0.0.0.0", port=8080, debug=True)
