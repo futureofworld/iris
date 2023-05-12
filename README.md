@@ -1,2 +1,2 @@
 # iris
-Iris Data visualization using dahs
+Iris Data visualization using dash
