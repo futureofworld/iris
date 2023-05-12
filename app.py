@@ -7,75 +7,64 @@ import plotly.express as px
 data = pd.read_csv('https://gist.githubusercontent.com/curran/a08a1080b88344b0c8a7/raw/0e7a9b0a5d22642a06d3d5b9bcbad9890c8ee534/iris.csv')
 
 species = data['species'].unique()
-
 features = data.drop('species', axis=1).columns
-
 
 app = Dash(__name__)
 app.title = 'Iris Dataset'
 
+
+scatter_plot = dcc.Graph(
+    id="graph",
+    config={"displayModeBar": False}
+),
+
+dropdown_x = html.Div(
+    children=[
+        html.Div(children='x-axis', className='menu-title'),
+        dcc.Dropdown(options=features, value="sepal_length", \
+                        clearable=False, id='x'),
+    ],
+    className='selector'
+)
+
+dropdown_y = html.Div(
+    children=[
+        html.Div(children='y-axis', className='menu-title'),
+        dcc.Dropdown(options=features, value="petal_length",
+                     clearable=False, id='y')
+    ],
+    className='selector'
+)
+
+multi_select_dropdown = dcc.Dropdown(
+    id='species',
+    options=species,
+    value=species,
+    multi=True,
+    clearable=False,
+    className="multi-select-dropdown"
+)
+
+
 app.layout = html.Div(
     children=[
-        html.Div(  # graph div
-            children= dcc.Graph(
-                id="iris-chart",
-                config={"displayModeBar": False}
-            ),
-            className='card'
-        ),
-        html.Div(  # dropdown for x and y
+        html.Div(children=scatter_plot, className='card'),
+        html.Div(
             children=[
-                html.Div(
-                    children=[
-                        html.Div(children='x-axis', className='menu-title'),
-                        dcc.Dropdown(
-                            options=features,
-                            value="sepal_length",
-                            clearable=False,
-                            id='x'
-                        ),
-                    ],
-                    className='selector'
-                ),
-                html.Div(
-                    children=[
-                        html.Div(children='y-axis', className='menu-title'),
-                        dcc.Dropdown(
-                                options=features,
-                                value="petal_length",
-                                clearable=False,
-                                id='y'
-                        )
-                    ],
-                    className='selector'
-                )
-                
+                html.Div(children=[dropdown_x, dropdown_y], className="container"),
+                html.Div(children=[multi_select_dropdown], className="multi-select")
             ],
-            className="container"
+            className='outer-container',
         ),
-        html.Div(  # multi select dropdown for species
-            children=[
-                dcc.Dropdown(
-                    id='species',
-                    options=species,
-                    value=species,
-                    multi=True,
-                    clearable=False,
-                    className="multi-select-dropdown"
-                )
-            ],
-            className="multi-select"
-        )
     ],
     className='wrapper'
 )
 
-
 @app.callback(
-    Output('iris-chart', 'figure'),
+    Output('graph', 'figure'),
     Input('x', 'value'),  # take the x value from user
     Input('y', 'value'),  # take the y value from the user
-    Input('species', 'value')  # take the species from the user
+    Input('species', 'value')  # take the species list from the user
 )
 def update_graph(x_value, y_value, species):
     figure = px.scatter(
@@ -89,4 +78,4 @@ def update_graph(x_value, y_value, species):
 
 
 if __name__ == "__main__":
-    app.run_server(host="0.0.0.0", port=8080, debug=True)
+    app.run_server(host="0.0.0.0", port=8080, debug=False)
